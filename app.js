@@ -1,3 +1,6 @@
+const fs = require('fs');
+const { writeFileSync } = fs;
+
 const students = [
     'maceo.basse@ynov.com',
     'jules.bloux@ynov.com',
@@ -25,9 +28,12 @@ const students = [
 const groups = [];
 // randomize the students per group of 2
 const randomize = (students) => {
-    const randomizedStudents = students.sort((a,b) => {
-        return Math.random() - 0.5
-    });
+    let randomizedStudents = students;
+    for(let i = 0; i < 3; i++) {
+        randomizedStudents = randomizedStudents.sort((a,b) => {
+            return Math.random() - 0.5
+        });
+    }
     const groups = [];
     for (let i = 0; i < randomizedStudents.length; i += 2) {
         groups.push(randomizedStudents.slice(i, i + 2));
@@ -37,3 +43,9 @@ const randomize = (students) => {
 
 const randomizedStudents = randomize(students)
 console.log(randomizedStudents);
+
+writeFileSync('groups.json', JSON.stringify(randomizedStudents, null, 2));
+const groupsMd = randomizedStudents.map((group, index) => {
+    return `## Groupe ${index + 1} \n\n - ${group.join('\n - ')}`;
+});
+writeFileSync('groups.md', groupsMd.join('\n\n'));
