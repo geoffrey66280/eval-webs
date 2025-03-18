@@ -47,14 +47,14 @@ type NotifType {
 }
 
 type Query {
-  users: [UserType!]!
+  listUsers: [UserType!]!
   user(id: String!): UserType
-  Rooms: [RoomType!]!
-  Room(id: String!): RoomType
+  listRooms: [RoomType!]!
+  room(id: String!): RoomType
   Notifs: [NotifType!]!
   Notif(id: String!): NotifType
-  Reservations: [ReservationType!]!
-  Reservation(id: String!): ReservationType
+  listReservations: [ReservationType!]!
+  reservation(id: String!): ReservationType
 }
 
 type Mutation {

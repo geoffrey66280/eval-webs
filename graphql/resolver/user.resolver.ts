@@ -12,7 +12,7 @@ export class UserResolver {
   ) {}
 
   @Query(() => [UserType])
-  async users(): Promise<UserType[]> {
+  async listUsers(): Promise<UserType[]> {
     return this.userRepo.find({
       relations: ['reservations', 'reservations.user'],
     });

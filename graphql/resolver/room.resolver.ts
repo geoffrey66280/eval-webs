@@ -12,14 +12,14 @@ export class RoomResolver {
   ) {}
 
   @Query(() => [RoomType])
-  async Rooms(): Promise<RoomType[]> {
+  async listRooms(): Promise<RoomType[]> {
     return this.RoomRepo.find({
       relations: ['reservations', 'reservations.room'],
     });
   }
 
   @Query(() => RoomType, { nullable: true })
-  async Room(@Args('id') id: string): Promise<RoomType> {
+  async room(@Args('id') id: string): Promise<RoomType> {
     return this.RoomRepo.findOneOrFail({ where: { id } });
   }
 
@@ -40,9 +40,12 @@ export class RoomResolver {
   }
 
   @Mutation(() => RoomType)
-  async deleteRoom(@Args('id') id: string): Promise<RoomType> {
+  async deleteRoom(@Args('id') id: string): Promise<boolean> {
     const Room = await this.RoomRepo.findOneOrFail({ where: { id } });
+    if (!Room) {
+      return false;
+    }
     await this.RoomRepo.delete({ id });
-    return Room;
+    return true;
   }
 }

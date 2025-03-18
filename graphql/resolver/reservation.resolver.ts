@@ -3,8 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ReservationEntity } from 'entities/reservation.entity';
 import { Repository } from 'typeorm';
 import {
-    createReservationInput,
-    ReservationType,
+  createReservationInput,
+  ReservationType,
 } from 'types/reservation.type';
 
 @Resolver(() => ReservationType)
@@ -15,14 +15,14 @@ export class ReservationResolver {
   ) {}
 
   @Query(() => [ReservationType])
-  async Reservations(): Promise<ReservationType[]> {
+  async listReservations(): Promise<ReservationType[]> {
     return this.ReservationRepo.find({
       relations: ['notifications', 'notifications.reservation'],
     });
   }
 
   @Query(() => ReservationType, { nullable: true })
-  async Reservation(@Args('id') id: string): Promise<ReservationType> {
+  async reservation(@Args('id') id: string): Promise<ReservationType> {
     return this.ReservationRepo.findOneOrFail({ where: { id } });
   }
 
@@ -48,11 +48,14 @@ export class ReservationResolver {
   }
 
   @Mutation(() => ReservationType)
-  async deleteReservation(@Args('id') id: string): Promise<ReservationType> {
+  async deleteReservation(@Args('id') id: string): Promise<boolean> {
     const Reservation = await this.ReservationRepo.findOneOrFail({
       where: { id },
     });
+    if (!Reservation) {
+      return false;
+    }
     await this.ReservationRepo.delete({ id });
-    return Reservation;
+    return true;
   }
 }
