@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Put, Delete, Body, Param, Query, HttpCode, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags, ApiOperation, ApiResponse, ApiQuery } from '@nestjs/swagger';
 import { RoomsService } from './rooms.service';
 import { CreateRoomDto } from './dto/create-room.dto';
 import { UpdateRoomDto } from './dto/update-room.dto';
@@ -15,6 +15,8 @@ export class RoomsController {
   @Get()
   @ApiOperation({ summary: 'Liste paginée des salles' })
   @ApiResponse({ status: 200, description: 'Liste des salles retournée' })
+  @ApiQuery({ name: 'skip', required: false, type: Number, description: "Nombre d'éléments à ignorer" })
+  @ApiQuery({ name: 'limit', required: false, type: Number, description: "Nombre maximum d'éléments à retourner" })
   async findAll(@Query('skip') skip?: number, @Query('limit') limit?: number) {
     const s = skip ? Number(skip) : 0;
     const l = limit ? Number(limit) : 10;

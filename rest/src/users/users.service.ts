@@ -28,13 +28,11 @@ export class UsersService {
     return user;
   }
 
-  // Simule le login, en production, utilisez Keycloak
   async login(loginDto: LoginDto): Promise<{ accessToken: string }> {
     const user = await this.userRepository.findOne({ where: { email: loginDto.email } });
     if (!user) {
       throw new UnauthorizedException('Identifiants invalides');
     }
-    // Pour la démo, le mot de passe attendu est "password"
     if (loginDto.password !== 'password') {
       throw new UnauthorizedException('Identifiants invalides');
     }
@@ -49,7 +47,6 @@ export class UsersService {
     return await this.userRepository.save(newUser);
   }
 
-  // Extraction CSV simulée, renvoie une URL de téléchargement
   async extract(userId: number): Promise<{ url: string }> {
     await this.findOne(userId);
     return { url: `http://minio/download/${userId}/reservations.csv` };
