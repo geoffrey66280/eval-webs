@@ -13,9 +13,11 @@ post {
 body:graphql {
   query {
     Notifs {
-      name
-      capacity
-      location
+      id
+      reservation_id
+      message
+      notification_date
+      is_sent
     }
   }
 }
