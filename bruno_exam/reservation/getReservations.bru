@@ -1,0 +1,21 @@
+meta {
+  name: getReservations
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: {{BASE_URL}}/graphql
+  body: graphql
+  auth: none
+}
+
+body:graphql {
+  query {
+    Notifs {
+      name
+      capacity
+      location
+    }
+  }
+}
