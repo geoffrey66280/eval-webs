@@ -1,0 +1,57 @@
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { User } from './user.entity';
+import { CreateUserDto } from './dto/create-user.dto';
+import { LoginDto } from './dto/login.dto';
+
+@Injectable()
+export class UsersService {
+  constructor(
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
+  ) { }
+
+  async findAll(skip = 0, limit = 10): Promise<User[]> {
+    return await this.userRepository.find({
+      skip,
+      take: limit,
+      order: { id: 'ASC' },
+    });
+  }
+
+  async findOne(id: number): Promise<User> {
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) {
+      throw new NotFoundException('Utilisateur non trouvé');
+    }
+    return user;
+  }
+
+  // Simule le login, en production, utilisez Keycloak
+  async login(loginDto: LoginDto): Promise<{ accessToken: string }> {
+    const user = await this.userRepository.findOne({ where: { email: loginDto.email } });
+    if (!user) {
+      throw new UnauthorizedException('Identifiants invalides');
+    }
+    // Pour la démo, le mot de passe attendu est "password"
+    if (loginDto.password !== 'password') {
+      throw new UnauthorizedException('Identifiants invalides');
+    }
+    return { accessToken: 'dummy-jwt-token' };
+  }
+
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const newUser = this.userRepository.create({
+      keycloak_id: 'dummy-keycloak-id',
+      email: createUserDto.email,
+    });
+    return await this.userRepository.save(newUser);
+  }
+
+  // Extraction CSV simulée, renvoie une URL de téléchargement
+  async extract(userId: number): Promise<{ url: string }> {
+    await this.findOne(userId);
+    return { url: `http://minio/download/${userId}/reservations.csv` };
+  }
+}
