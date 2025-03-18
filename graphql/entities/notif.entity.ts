@@ -2,6 +2,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -12,21 +14,31 @@ export class NotifEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
-  reservationId: string;
+  @Column({
+    name: 'reservation_id',
+  })
+  @Index()
+  reservation_id: string;
 
   @Column()
   message: string;
 
-  @CreateDateColumn()
-  notificationDate: Date;
+  @CreateDateColumn({
+    name: 'notification_date',
+  })
+  notification_date: Date;
 
-  @Column()
-  isSent: boolean;
+  @Column({
+    name: 'is_sent',
+  })
+  is_sent: boolean;
 
   @ManyToOne(
     () => ReservationEntity,
     (reservation) => reservation.notifications,
   )
+  @JoinColumn({
+    name: 'reservation_id',
+  })
   reservation: ReservationEntity;
 }

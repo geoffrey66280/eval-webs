@@ -7,13 +7,13 @@ export class UserType {
   id: string;
 
   @Field()
-  keycloackId: string;
+  keycloack_id: string;
 
   @Field()
   email: string;
 
   @Field()
-  createdAt: Date;
+  created_at: Date;
 
   @Field(() => [ReservationType])
   reservations: ReservationType[];
@@ -22,7 +22,7 @@ export class UserType {
 @InputType()
 export class createUserInput {
   @Field()
-  keycloackId: string;
+  keycloack_id: string;
 
   @Field()
   email: string;

@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -15,27 +16,43 @@ export class ReservationEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
-  userId: string;
+  @Column({
+    name: 'user_id',
+  })
+  user_id: string;
 
-  @Column()
-  roomId: string;
+  @Column({
+    name: 'room_id',
+  })
+  room_id: string;
 
-  @Column()
-  startTime: Date;
+  @Column({
+    name: 'start_time',
+  })
+  start_time: Date;
 
-  @Column()
-  endTime: Date;
+  @Column({
+    name: 'end_time',
+  })
+  end_time: Date;
 
-  @CreateDateColumn()
-  createdAt: Date;
+  @CreateDateColumn({
+    name: 'created_at',
+  })
+  created_at: Date;
 
   @Column()
   status: string;
 
+  @JoinColumn({
+    name: 'user_id',
+  })
   @ManyToOne(() => UserEntity, (user) => user.reservations)
   user: UserEntity;
 
+  @JoinColumn({
+    name: 'room_id',
+  })
   @ManyToOne(() => RoomEntity, (room) => room.reservations)
   room: RoomEntity;
 
