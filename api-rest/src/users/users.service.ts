@@ -20,7 +20,7 @@ export class UsersService {
     });
   }
 
-  async findOne(id: number): Promise<User> {
+  async findOne(id: string): Promise<User> {
     const user = await this.userRepository.findOne({ where: { id } });
     if (!user) {
       throw new NotFoundException('Utilisateur non trouvé');
@@ -41,13 +41,13 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const newUser = this.userRepository.create({
-      keycloak_id: 'dummy-keycloak-id',
+      keycloakId: 'dummy-keycloak-id',
       email: createUserDto.email,
     });
     return await this.userRepository.save(newUser);
   }
 
-  async extract(userId: number): Promise<{ url: string }> {
+  async extract(userId: string): Promise<{ url: string }> {
     await this.findOne(userId);
     return { url: `http://minio/download/${userId}/reservations.csv` };
   }

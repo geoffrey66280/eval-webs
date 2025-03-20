@@ -6,6 +6,10 @@ export class CreateUserDto {
   username: string;
 
   @IsNotEmpty()
+  @IsString()
+  keycloak_id: string;
+
+  @IsNotEmpty()
   @IsEmail()
   email: string;
 

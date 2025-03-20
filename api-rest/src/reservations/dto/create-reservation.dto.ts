@@ -3,17 +3,17 @@ import { IsNotEmpty, IsNumber, IsISO8601 } from 'class-validator';
 export class CreateReservationDto {
   @IsNotEmpty()
   @IsNumber()
-  user_id: number;
+  userId: number;
 
   @IsNotEmpty()
   @IsNumber()
-  room_id: number;
+  roomId: number;
 
   @IsNotEmpty()
   @IsISO8601()
-  start_time: string;
+  startTime: string;
 
   @IsNotEmpty()
   @IsISO8601()
-  end_time: string;
+  endTime: string;
 }

@@ -26,8 +26,8 @@ export class RoomsController {
   @Get(':id')
   @ApiOperation({ summary: 'Détails d’une salle spécifique' })
   @ApiResponse({ status: 200, description: 'Détails de la salle retournée' })
-  async findOne(@Param('id') id: number) {
-    return await this.roomsService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.roomsService.findOne(id);
   }
 
   @Post()
@@ -40,15 +40,15 @@ export class RoomsController {
   @Put(':id')
   @ApiOperation({ summary: 'Mise à jour d’une salle existante' })
   @ApiResponse({ status: 200, description: 'Salle mise à jour' })
-  async update(@Param('id') id: number, @Body() updateRoomDto: UpdateRoomDto) {
-    return await this.roomsService.update(+id, updateRoomDto);
+  async update(@Param('id') id: string, @Body() updateRoomDto: UpdateRoomDto) {
+    return await this.roomsService.update(id, updateRoomDto);
   }
 
   @Delete(':id')
   @ApiOperation({ summary: 'Suppression d’une salle' })
   @ApiResponse({ status: 204, description: 'Salle supprimée' })
   @HttpCode(204)
-  async remove(@Param('id') id: number) {
-    await this.roomsService.remove(+id);
+  async remove(@Param('id') id: string) {
+    await this.roomsService.remove(id);
   }
 }

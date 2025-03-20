@@ -1,30 +1,25 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
-@Entity()
+@Entity({ name: 'rooms' })
 export class Room {
-  @ApiProperty()
-  @PrimaryGeneratedColumn()
-  id: number;
+  @ApiProperty({ description: 'Unique identifier of the room (UUID)' })
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-  @ApiProperty()
-  @Column()
+  @ApiProperty({ description: 'Name of the room' })
+  @Column({ length: 100 })
   name: string;
 
-  @ApiProperty()
+  @ApiProperty({ description: 'Maximum capacity of the room' })
   @Column()
   capacity: number;
 
-  @ApiProperty({ required: false })
+  @ApiProperty({ description: 'Location of the room' })
   @Column({ nullable: true })
   location: string;
 
-  @ApiProperty()
-  @CreateDateColumn()
-  created_at: Date;
+  @ApiProperty({ description: 'Creation date of the room' })
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
 }

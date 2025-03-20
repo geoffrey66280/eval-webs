@@ -20,7 +20,7 @@ export class ReservationsService {
     });
   }
 
-  async findOne(id: number): Promise<Reservation> {
+  async findOne(id: string): Promise<Reservation> {
     const reservation = await this.reservationRepository.findOne({ where: { id } });
     if (!reservation) {
       throw new NotFoundException('Réservation non trouvée');
@@ -31,25 +31,25 @@ export class ReservationsService {
   async create(createReservationDto: CreateReservationDto): Promise<Reservation> {
     const reservation = this.reservationRepository.create({
       ...createReservationDto,
-      start_time: new Date(createReservationDto.start_time),
-      end_time: new Date(createReservationDto.end_time),
+      startTime: new Date(createReservationDto.startTime),
+      endTime: new Date(createReservationDto.endTime),
     });
     return await this.reservationRepository.save(reservation);
   }
 
-  async update(id: number, updateReservationDto: UpdateReservationDto): Promise<Reservation> {
+  async update(id: string, updateReservationDto: UpdateReservationDto): Promise<Reservation> {
     const reservation = await this.findOne(id);
-    if (updateReservationDto.start_time) {
-      updateReservationDto.start_time = new Date(updateReservationDto.start_time).toISOString();
+    if (updateReservationDto.startTime) {
+      updateReservationDto.startTime = new Date(updateReservationDto.startTime).toISOString();
     }
-    if (updateReservationDto.end_time) {
-      updateReservationDto.end_time = new Date(updateReservationDto.end_time).toISOString();
+    if (updateReservationDto.endTime) {
+      updateReservationDto.endTime = new Date(updateReservationDto.endTime).toISOString();
     }
     Object.assign(reservation, updateReservationDto);
     return await this.reservationRepository.save(reservation);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     const reservation = await this.findOne(id);
     await this.reservationRepository.remove(reservation);
   }

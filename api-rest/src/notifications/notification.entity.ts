@@ -1,25 +1,25 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
-@Entity()
+@Entity({ name: 'notifications' })
 export class Notification {
-  @ApiProperty()
+  @ApiProperty({ description: 'Unique identifier of the notification (number)' })
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ApiProperty()
-  @Column()
-  reservation_id: number;
+  @ApiProperty({ description: 'Reservation identifier' })
+  @Column({ name: 'reservation_id' })
+  reservationId: number;
 
-  @ApiProperty()
+  @ApiProperty({ description: 'Notification message' })
   @Column('text')
   message: string;
 
-  @ApiProperty()
-  @Column()
-  notification_date: Date;
+  @ApiProperty({ description: 'Notification date', type: String })
+  @Column({ name: 'notification_date' })
+  notificationDate: Date;
 
-  @ApiProperty({ default: false })
+  @ApiProperty({ description: 'Indicates if the notification is sent', default: false })
   @Column({ default: false })
-  is_sent: boolean;
+  isSent: boolean;
 }

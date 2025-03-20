@@ -35,8 +35,8 @@ export class UsersController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Détails d’un utilisateur spécifique' })
   @ApiResponse({ status: 200, description: 'Détails de l’utilisateur retournés' })
-  async findOne(@Param('id') id: number) {
-    return await this.usersService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.usersService.findOne(id);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -53,7 +53,7 @@ export class UsersController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Extraction CSV des réservations d’un utilisateur' })
   @ApiResponse({ status: 200, description: 'URL du fichier CSV retournée' })
-  async extract(@Param('id') id: number) {
-    return await this.usersService.extract(+id);
+  async extract(@Param('id') id: string) {
+    return await this.usersService.extract(id);
   }
 }

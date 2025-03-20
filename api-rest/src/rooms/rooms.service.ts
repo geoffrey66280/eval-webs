@@ -20,7 +20,7 @@ export class RoomsService {
     });
   }
 
-  async findOne(id: number): Promise<Room> {
+  async findOne(id: string): Promise<Room> {
     const room = await this.roomsRepository.findOne({ where: { id } });
     if (!room) {
       throw new NotFoundException('Salle non trouvée');
@@ -33,13 +33,13 @@ export class RoomsService {
     return await this.roomsRepository.save(room);
   }
 
-  async update(id: number, updateRoomDto: UpdateRoomDto): Promise<Room> {
+  async update(id: string, updateRoomDto: UpdateRoomDto): Promise<Room> {
     const room = await this.findOne(id);
     Object.assign(room, updateRoomDto);
     return await this.roomsRepository.save(room);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     const room = await this.findOne(id);
     await this.roomsRepository.remove(room);
   }

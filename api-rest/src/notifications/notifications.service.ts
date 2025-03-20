@@ -10,23 +10,23 @@ export class NotificationsService {
     private notificationRepository: Repository<Notification>,
   ) { }
 
-  async createNotification(data: { reservation_id: number; message: string; notification_date: string }): Promise<Notification> {
+  async createNotification(data: { reservationId: number; message: string; notificationDate: string }): Promise<Notification> {
     const notification = this.notificationRepository.create({
-      reservation_id: data.reservation_id,
+      reservationId: data.reservationId,
       message: data.message,
-      notification_date: new Date(data.notification_date),
-      is_sent: false,
+      notificationDate: new Date(data.notificationDate),
+      isSent: false,
     });
     return await this.notificationRepository.save(notification);
   }
 
-  async updateNotification(data: { id: number; message: string; notification_date: string }): Promise<Notification> {
+  async updateNotification(data: { id: number; message: string; notificationDate: string }): Promise<Notification> {
     const notification = await this.notificationRepository.findOne({ where: { id: data.id } });
     if (!notification) {
       throw new NotFoundException('Notification not found');
     }
     notification.message = data.message;
-    notification.notification_date = new Date(data.notification_date);
+    notification.notificationDate = new Date(data.notificationDate);
     return await this.notificationRepository.save(notification);
   }
 

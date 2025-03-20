@@ -3,19 +3,19 @@ import { IsOptional, IsNumber, IsISO8601, IsString, IsIn } from 'class-validator
 export class UpdateReservationDto {
   @IsOptional()
   @IsNumber()
-  user_id?: number;
+  userId?: number;
 
   @IsOptional()
   @IsNumber()
-  room_id?: number;
+  roomId?: number;
 
   @IsOptional()
   @IsISO8601()
-  start_time?: string;
+  startTime?: string;
 
   @IsOptional()
   @IsISO8601()
-  end_time?: string;
+  endTime?: string;
 
   @IsOptional()
   @IsString()

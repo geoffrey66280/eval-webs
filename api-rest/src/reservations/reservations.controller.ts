@@ -26,8 +26,8 @@ export class ReservationsController {
   @Get(':id')
   @ApiOperation({ summary: 'Détails d’une réservation spécifique' })
   @ApiResponse({ status: 200, description: 'Détails de la réservation retournée' })
-  async findOne(@Param('id') id: number) {
-    return await this.reservationsService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.reservationsService.findOne(id);
   }
 
   @Post()
@@ -40,15 +40,15 @@ export class ReservationsController {
   @Put(':id')
   @ApiOperation({ summary: 'Mise à jour d’une réservation existante' })
   @ApiResponse({ status: 200, description: 'Réservation mise à jour' })
-  async update(@Param('id') id: number, @Body() updateReservationDto: UpdateReservationDto) {
-    return await this.reservationsService.update(+id, updateReservationDto);
+  async update(@Param('id') id: string, @Body() updateReservationDto: UpdateReservationDto) {
+    return await this.reservationsService.update(id, updateReservationDto);
   }
 
   @Delete(':id')
   @ApiOperation({ summary: 'Suppression d’une réservation' })
   @ApiResponse({ status: 204, description: 'Réservation supprimée' })
   @HttpCode(204)
-  async remove(@Param('id') id: number) {
-    await this.reservationsService.remove(+id);
+  async remove(@Param('id') id: string) {
+    await this.reservationsService.remove(id);
   }
 }

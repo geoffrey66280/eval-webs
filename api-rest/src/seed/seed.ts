@@ -7,6 +7,7 @@ async function bootstrap() {
   const usersService = app.get(UsersService);
   await usersService.create({
     username: 'admin',
+    keycloak_id: 'admin',
     email: 'admin@example.com',
     firstName: 'Admin',
     lastName: 'User',

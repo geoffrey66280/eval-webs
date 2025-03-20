@@ -1,21 +1,21 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
-@Entity()
+@Entity({ name: 'users' })
 export class User {
-  @ApiProperty()
-  @PrimaryGeneratedColumn()
-  id: number;
+  @ApiProperty({ description: 'Unique identifier of the user (UUID)' })
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-  @ApiProperty()
-  @Column()
-  keycloak_id: string;
+  @ApiProperty({ description: 'Keycloak identifier' })
+  @Column({ unique: true, name: 'keycloak_id' })
+  keycloakId: string;
 
-  @ApiProperty()
-  @Column({ unique: true })
+  @ApiProperty({ description: 'Creation date of the user' })
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
+
+  @ApiProperty({ description: 'Email address', required: false })
+  @Column({ nullable: true })
   email: string;
-
-  @ApiProperty()
-  @CreateDateColumn()
-  created_at: Date;
 }

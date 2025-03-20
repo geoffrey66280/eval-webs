@@ -8,17 +8,27 @@ export class NotificationsController {
   constructor(private readonly notificationsService: NotificationsService) { }
 
   @GrpcMethod('NotificationService', 'CreateNotification')
-  async createNotification(data: { reservation_id: number; message: string; notification_date: string }): Promise<Notification> {
-    return await this.notificationsService.createNotification(data);
+  async createNotification(data: any): Promise<Notification> {
+    const { reservationId, message, notificationDate } = data;
+    return await this.notificationsService.createNotification({
+      reservationId: reservationId,
+      message,
+      notificationDate: notificationDate,
+    });
   }
 
   @GrpcMethod('NotificationService', 'UpdateNotification')
-  async updateNotification(data: { id: number; message: string; notification_date: string }): Promise<Notification> {
-    return await this.notificationsService.updateNotification(data);
+  async updateNotification(data: any): Promise<Notification> {
+    const { id, message, notificationDate } = data;
+    return await this.notificationsService.updateNotification({
+      id,
+      message,
+      notificationDate: notificationDate,
+    });
   }
 
   @GrpcMethod('NotificationService', 'GetNotification')
-  async getNotification(data: { id: number }): Promise<Notification> {
+  async getNotification(data: any): Promise<Notification> {
     return await this.notificationsService.getNotification(data.id);
   }
 }
